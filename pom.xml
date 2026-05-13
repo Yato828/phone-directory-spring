@@ -49,7 +49,7 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>3.3.2</version>
       </plugin>
-      <!-- Плагин для запуска Tomcat из Maven (работает в Community Edition) -->
+      <!-- Плагин для запуска Tomcat из Maven  -->
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
         <artifactId>tomcat7-maven-plugin</artifactId>
