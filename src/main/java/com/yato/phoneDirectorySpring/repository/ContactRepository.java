@@ -19,7 +19,7 @@ public class ContactRepository {
     private EntityManager entityManager;
 
     @GetMapping
-    public List<Contact> findAll(){
+    public List<Contact> getAll(){
         return entityManager
                 .createQuery("FROM Contact", Contact.class)
                 .getResultList();
