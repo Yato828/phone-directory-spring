@@ -1,6 +1,8 @@
 package com.yato.phoneDirectorySpring.controller;
 
 import com.yato.phoneDirectorySpring.entity.Contact;
+import com.yato.phoneDirectorySpring.repository.ContactRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,16 +16,14 @@ import java.util.List;
 @RequestMapping("/all")
 public class ContactController {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    private ContactRepository repository;
 
     @GetMapping
-    public String listContacts(Model model) {
-        List<Contact> contacts = entityManager
-                .createQuery("FROM Contact", Contact.class)
-                .getResultList();
+        public String listContacts (Model model){
+            List<Contact> contacts = repository.findAll();
+            model.addAttribute("contacts", contacts);
+            return "pages/contacts";
 
-        model.addAttribute("contacts", contacts);
-        return "pages/contacts";
+        }
     }
-}
