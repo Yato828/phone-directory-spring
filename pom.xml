@@ -73,6 +73,20 @@
 
     <build>
         <finalName>phone-directory-spring</finalName>
+
+        <!-- ВАЖНО: копируем XML из папки java в WAR -->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -90,4 +104,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
