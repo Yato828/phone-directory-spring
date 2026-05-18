@@ -21,13 +21,23 @@
             <td>${c.middleName}</td>
             <td>${c.phone}</td>
             <td>${c.birth}</td>
-            <td><a href="/phone-directory/contact?id=${c.id}">✏️</a></td>
-            <td><a href="/phone-directory/contacts?delete=${c.id}">❌</a></td>
+            <td>
+                <form action="/contacts/edit" method="get" style="display:inline;">
+                    <input type="hidden" name="id" value="${c.id}">
+                    <button type="submit">✏️</button>
+                </form>
+            </td>
+            <td>
+                <form action="/contacts/delete" method="post" style="display:inline;">
+                    <input type="hidden" name="id" value="${c.id}">
+                    <button type="submit" onclick="return confirm('Удалить?')">❌</button>
+                </form>
+            </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
 <br/>
-<a href="/phone-directory/contact">➕ Добавить контакт</a>
+<a href="/contacts/add">➕ Добавить контакт</a>
 </body>
 </html>

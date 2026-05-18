@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -19,11 +20,32 @@ public class ContactRepository {
     private EntityManager entityManager;
 
     @GetMapping
-    public List<Contact> getAll(){
+    public List<Contact> findAll(){
         return entityManager
                 .createQuery("FROM Contact", Contact.class)
                 .getResultList();
 
+    }
 
+    public void edit(Contact contact){
+        entityManager.merge(contact);
+    }
+
+    public Contact findById(int id) {
+        return entityManager.find(Contact.class, id);
+    }
+
+    public void update(Contact contact) {
+        entityManager.merge(contact);
+    }
+
+    public void save(Contact contact) {
+        entityManager.persist(contact);
+    }
+
+    public void delete(int id) {
+        Contact contact = entityManager.find(Contact.class, id);
+        if (contact != null)
+        entityManager.remove(contact);
     }
 }
