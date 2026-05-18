@@ -3,36 +3,47 @@
 <html>
 <head>
     <title>Контакт</title>
+
+    <style>
+        <%@ include file="style.css" %>
+    </style>
 </head>
 <body>
+<div class="form-container">
+    <c:choose>
+        <c:when test="${empty contact.id}">
+            <h1>➕ Новый контакт</h1>
+        </c:when>
+        <c:otherwise>
+            <h1>✏️ Редактирование контакта</h1>
+        </c:otherwise>
+    </c:choose>
 
-<c:choose>
-    <c:when test="${contact.id == null}">
-        <h1>Новый контакт</h1>
-    </c:when>
-    <c:otherwise>
-        <h1>Редактирование</h1>
-    </c:otherwise>
-</c:choose>
-
-<c:choose>
-    <c:when test="${contact.id == null}">
-        <form action="/contacts/save" method="post">
-    </c:when>
-    <c:otherwise>
-        <form action="/contacts/update" method="post">
+    <form action="${empty contact.id ? '/contacts/save' : '/contacts/update'}" method="post">
+        <c:if test="${not empty contact.id}">
             <input type="hidden" name="id" value="${contact.id}">
-    </c:otherwise>
-</c:choose>
+        </c:if>
 
-    Имя: <input type="text" name="firstName" value="${contact.firstName}" required><br>
-    Фамилия: <input type="text" name="lastName" value="${contact.lastName}" required><br>
-    Отчество: <input type="text" name="middleName" value="${contact.middleName}"><br>
-    Телефон: <input type="text" name="phone" value="${contact.phone}" required><br>
-    Дата рождения: <input type="date" name="birthDate" value="${contact.birth}"><br>
+        <label>Имя *:</label>
+        <input type="text" name="firstName" value="${contact.firstName}" required>
 
-    <button type="submit">Сохранить</button>
-    <a href="/contacts/all">Отмена</a>
-</form>
+        <label>Фамилия *:</label>
+        <input type="text" name="lastName" value="${contact.lastName}" required>
+
+        <label>Отчество:</label>
+        <input type="text" name="middleName" value="${contact.middleName}">
+
+        <label>Телефон *:</label>
+        <input type="text" name="phone" value="${contact.phone}" required>
+
+        <label>Дата рождения:</label>
+        <input type="date" name="birthDate" value="${contact.birth}">
+
+        <div class="button-group">
+            <button type="submit" class="save-btn">💾 Сохранить</button>
+            <a href="/contacts/all" class="cancel-link">❌ Отмена</a>
+        </div>
+    </form>
+</div>
 </body>
 </html>
