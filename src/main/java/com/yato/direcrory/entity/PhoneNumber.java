@@ -1,4 +1,4 @@
-package com.yato.phoneDirectorySpring.entity;
+package com.yato.direcrory.entity;
 
 import javax.persistence.*;
 
@@ -17,18 +17,15 @@ public class PhoneNumber {
 
     @ManyToOne
     @JoinColumn(name = "contact_id", nullable = false)
-    private Contact contact;
+    private Person person;
 
     public PhoneNumber() {
-    } // второй конструктор нужен для хибернейта
+    }
 
-
-    public PhoneNumber(String number, String type, Contact contact) {
+    public PhoneNumber(String number, String type, Person person) {
         this.number = number;
         this.type = type;
-        this.contact = contact;
-
-
+        this.person = person;
     }
 
     public Integer getId() {
@@ -42,8 +39,8 @@ public class PhoneNumber {
         return type;
     }
 
-    public  Contact getContact(){
-        return contact;
+    public Person getPerson(){
+        return person;
     }
 
     public void setId(Integer id) {
@@ -58,8 +55,8 @@ public class PhoneNumber {
         this.type = type;
     }
 
-    public void setContact(Contact contact){
-        this.contact = contact;
+    public void setPerson(Person person){
+        this.person = person;
     }
 
 }

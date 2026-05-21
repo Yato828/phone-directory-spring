@@ -1,4 +1,4 @@
-package com.yato.phoneDirectorySpring.entity;
+package com.yato.direcrory.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "contacts")
-public class Contact {
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,14 +28,14 @@ public class Contact {
     private String birth;
 
 
-    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PhoneNumber> phoneNumbers = new ArrayList<>();
 
     // Конструктор
-    public Contact() {
+    public Person() {
     }
 
-    public Contact(String firstName, String lastName, String middleName, String phone, String birth) {
+    public Person(String firstName, String lastName, String middleName, String phone, String birth) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
@@ -92,11 +92,11 @@ public class Contact {
         this.birth = birth;
     }
     public List<PhoneNumber> getPhoneNumbers() {
-        return phoneNumbers;  // поле называется phoneNumbers (с маленькой)
+        return phoneNumbers;
     }
 
     public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
-        this.phoneNumbers = phoneNumbers;  // this.phoneNumbers - поле класса
+        this.phoneNumbers = phoneNumbers;
     }
 
     @Override
