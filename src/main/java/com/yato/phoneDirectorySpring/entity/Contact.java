@@ -1,6 +1,8 @@
 package com.yato.phoneDirectorySpring.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "contacts")
@@ -24,6 +26,10 @@ public class Contact {
 
     @Column(name = "birth_date")
     private String birth;
+
+
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PhoneNumber> phoneNumbers = new ArrayList<>();
 
     // Конструктор
     public Contact() {
@@ -84,6 +90,13 @@ public class Contact {
 
     public void setBirth(String birth) {
         this.birth = birth;
+    }
+    public List<PhoneNumber> getPhoneNumbers() {
+        return phoneNumbers;  // поле называется phoneNumbers (с маленькой)
+    }
+
+    public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;  // this.phoneNumbers - поле класса
     }
 
     @Override

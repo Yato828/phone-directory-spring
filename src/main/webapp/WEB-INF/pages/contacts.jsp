@@ -15,7 +15,7 @@
     <c:choose>
         <c:when test="${empty contacts}">
             <div class="empty-message">
-                <p>📭 Нет сохраненных контактов</p>
+                <p> Нет сохраненных контактов</p>
                 <a href="/contacts/add" class="add-link">➕ Добавить первый контакт</a>
             </div>
         </c:when>
@@ -28,6 +28,7 @@
                         <th>Отчество</th>
                         <th>Телефон</th>
                         <th>Дата рождения</th>
+                        <th>Телефоны</th>
                         <th>Редактировать</th>
                         <th>Удалить</th>
                     </tr>
@@ -40,6 +41,9 @@
                             <td>${not empty contact.middleName ? contact.middleName : '-'}</td>
                             <td>${contact.phone}</td>
                             <td>${not empty contact.birth ? contact.birth : '-'}</td>
+                            <td>
+                                <a href="/contacts/phones/${contact.id}" class="edit-btn">📞 Телефоны</a>
+                            </td>
                             <td>
                                 <form action="/contacts/edit" method="get" style="display:inline;">
                                     <input type="hidden" name="id" value="${contact.id}">
