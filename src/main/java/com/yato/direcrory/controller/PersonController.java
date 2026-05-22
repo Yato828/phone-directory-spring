@@ -41,7 +41,7 @@ public class PersonController {
 
     @PostMapping("/save")
     public String savePerson(@ModelAttribute Person person) {
-        personService.save(person);
+        personService.saveOrUpdate(person);
         return "redirect:/persons/all";
     }
 

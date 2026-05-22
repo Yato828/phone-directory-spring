@@ -2,8 +2,8 @@ package com.yato.direcrory.controller;
 
 import com.yato.direcrory.entity.Person;
 import com.yato.direcrory.entity.PhoneNumber;
-import com.yato.direcrory.repository.PhoneNumberRepository;
 import com.yato.direcrory.service.PersonService;
+import com.yato.direcrory.service.PhoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,15 +19,12 @@ public class PhoneController {
     private PersonService personService;
 
     @Autowired
-    private PhoneNumberRepository phoneNumberRepository;
-
-    @Autowired
-    private PersonService phoneService;
+    private PhoneService phoneService;
 
     @GetMapping("/phones/{personId}")
     public String showPhones(@PathVariable int personId, Model model) {
         Person person = personService.getById(personId);
-        List<PhoneNumber> phones = phoneNumberRepository.findByPersonId(personId);
+        List<PhoneNumber> phones = phoneService.findByPersonId(personId);
         model.addAttribute("person", person);
         model.addAttribute("phones", phones);
         return "phones";
@@ -46,18 +43,15 @@ public class PhoneController {
                             @RequestParam String type) {
         Person person = personService.getById(personId);
         PhoneNumber phone = new PhoneNumber(number, type, person);
-        phoneNumberRepository.save(phone);
+        phoneService.save(phone);
         return "redirect:/persons/phones/" + personId;
     }
 
     @GetMapping("/phones/delete/{phoneId}")
     public String deletePhone(@PathVariable int phoneId) {
-        PhoneNumber phone = phoneNumberRepository.findById(phoneId);
+        PhoneNumber phone = phoneService.findById(phoneId);
         int personId = phone.getPerson().getId();
-        phoneNumberRepository.deleteById(phoneId);
+        phoneService.deleteById(phoneId);
         return "redirect:/persons/phones/" + personId;
     }
-
 }
-
-
