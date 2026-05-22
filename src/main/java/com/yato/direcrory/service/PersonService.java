@@ -13,7 +13,6 @@ public class PersonService {
     @Autowired
     private PersonRepository repository;
 
-
     public List<Person> getAll() {
         return repository.findAll();
     }
@@ -24,10 +23,7 @@ public class PersonService {
     public void edit(Person person){
         repository.edit(person);
     }
-    @Transactional
-    public void update(Person person) {
-        repository.update(person);
-    }
+
     @Transactional
     public void save(Person person) {
         repository.save(person);

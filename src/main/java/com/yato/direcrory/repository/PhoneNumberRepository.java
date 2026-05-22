@@ -2,7 +2,6 @@ package com.yato.direcrory.repository;
 
 import com.yato.direcrory.entity.PhoneNumber;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;

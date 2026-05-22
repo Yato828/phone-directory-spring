@@ -28,7 +28,7 @@
                 <label>Отчество:</label>
                 <input type="text" name="middleName" value="${person.middleName}">
                 <label>Телефон :</label>
-                <input type="text" name="phone" value="${person.phone}" required>
+                <input type="text" name="phone" value="${person.phone}" required> ДОЛЖЕН ВЫВОДИТЬСЯ НОМЕР
                 <label>Дата рождения:</label>
                 <input type="date" name="birthDate" value="${person.birth}">
                 <div class="button-group">
