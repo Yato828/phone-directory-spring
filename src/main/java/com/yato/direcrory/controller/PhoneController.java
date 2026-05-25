@@ -51,6 +51,11 @@ public class PhoneController {
         if (phone.getId() == null) {
             Person person = personService.getById(personId);
             phone.setPerson(person);
+        } else {
+            if (phone.getPerson() == null && personId > 0) {
+                Person person = personService.getById(personId);
+                phone.setPerson(person);
+            }
         }
         phoneService.saveOrUpdate(phone);
         return "redirect:/phones/" + personId;

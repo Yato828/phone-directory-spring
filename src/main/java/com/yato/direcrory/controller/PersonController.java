@@ -44,7 +44,7 @@ public class PersonController {
         if (phone != null && !phone.isEmpty()) {
             PhoneNumber phoneNumber = new PhoneNumber();
             phoneNumber.setNumber(phone);
-            phoneNumber.setType("MAIN");
+//            phoneNumber.setType("MAIN");
             phoneNumber.setPerson(person);
             phoneService.saveOrUpdate(phoneNumber);
         }

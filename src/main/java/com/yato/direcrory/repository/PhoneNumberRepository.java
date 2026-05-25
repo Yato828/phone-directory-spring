@@ -15,7 +15,7 @@ public class PhoneNumberRepository {
 
     public List<PhoneNumber> findByPersonId(Integer personId) {
         return entityManager
-                .createQuery("SELECT p FROM PhoneNumber p WHERE p.person.id = :personId", PhoneNumber.class)
+                .createQuery("SELECT p FROM PhoneNumber p WHERE p.person.id = :personId ORDER BY p.id", PhoneNumber.class)
                 .setParameter("personId", personId)
                 .getResultList();
     }
