@@ -38,7 +38,7 @@
                 </c:if>
 
                 <label>Дата рождения:</label>
-                <input type="date" name="birthDate" value="${person.birth}">
+                <input type="date" name="birth" value="${person.birth}">
 
                 <div class="button-group">
                     <button type="submit" class="save-btn">💾 Сохранить</button>
