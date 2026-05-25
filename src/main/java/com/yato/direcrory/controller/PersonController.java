@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/persons")
@@ -40,20 +38,9 @@ public class PersonController {
     }
 
     @PostMapping("/save")
-    public String savePerson(@RequestParam String firstName,
-                             @RequestParam String lastName,
-                             @RequestParam(required = false) String middleName,
-                             @RequestParam(required = false) String phone,
-                             @RequestParam(required = false) String birthDate) {
-
-        Person person = new Person();
-        person.setFirstName(firstName);
-        person.setLastName(lastName);
-        person.setMiddleName(middleName);
-        person.setBirth(birthDate);
+    public String savePerson(@ModelAttribute Person person,
+                             @RequestParam(required = false) String phone) {
         personService.saveOrUpdate(person);
-
-        // Если передан телефон, создаем номер
         if (phone != null && !phone.isEmpty()) {
             PhoneNumber phoneNumber = new PhoneNumber();
             phoneNumber.setNumber(phone);
@@ -61,23 +48,6 @@ public class PersonController {
             phoneNumber.setPerson(person);
             phoneService.save(phoneNumber);
         }
-
-        return "redirect:/persons/all";
-    }
-
-    @PostMapping("/update")
-    public String updatePerson(@RequestParam int id,
-                               @RequestParam String firstName,
-                               @RequestParam String lastName,
-                               @RequestParam(required = false) String middleName,
-                               @RequestParam(required = false) String birthDate) {
-
-        Person person = personService.getById(id);
-        person.setFirstName(firstName);
-        person.setLastName(lastName);
-        person.setMiddleName(middleName);
-        person.setBirth(birthDate);
-        personService.saveOrUpdate(person);
 
         return "redirect:/persons/all";
     }

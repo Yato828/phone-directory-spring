@@ -32,7 +32,7 @@
                                     <c:if test="${status.first}">
                                         <span style="color: green;"> (Основной)</span>
                                     </c:if>
-                                </td>
+                                  </td>
                                 <td>${phone.type != null ? phone.type : 'не указан'}?</td>
                                 <td>
                                     <c:if test="${!status.first}">
