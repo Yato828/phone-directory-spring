@@ -58,6 +58,5 @@ public class PhoneNumber {
     public void setPerson(Person person){
         this.person = person;
     }
-
 }
 

@@ -4,45 +4,54 @@
 <head>
     <title>Телефоны контакта</title>
     <style>
-            <%@ include file="style.css" %>
-        </style>
+        <%@ include file="style.css" %>
+    </style>
 </head>
-    <body>
-        <div class="container">
-            <h1>📞 Телефоны: ${person.firstName} ${person.lastName}</h1>
-            <div style="margin-bottom: 20px;">
-                <h3>📱 Основной номер: ${contact.phone}</h3>
-            </div>
-            <h3>➕ Дополнительные номера:</h3>
-            <c:if test="${empty phones}">
-                <p>❌ Нет дополнительных номеров</p>
-            </c:if>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Номер телефона</th>
-                        <th>Тип</th>
-                        <th>Действия</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="${phones}" var="phone">
+<body>
+    <div class="container">
+        <h1>📞 Телефоны: ${person.firstName} ${person.lastName}</h1>
+
+        <c:choose>
+            <c:when test="${empty phones}">
+                <p>❌ Нет добавленных телефонов</p>
+            </c:when>
+            <c:otherwise>
+                <table>
+                    <thead>
                         <tr>
-                            <td>${phone.number}</td>
-                            <td>${phone.type != null ? phone.type : 'не указан'}</td>
-                            <td>
-                                <a href="/persons/phones/delete/${phone.id}"
-                                   onclick="return confirm('Удалить номер ${phone.number}?')"
-                                   class="delete-btn">❌ Удалить</a>
-                            </td>
+                            <th>Номер телефона</th>
+                            <th>Тип</th>
+                            <th>Действия</th>
                         </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-            <br/>
-            <a href="/persons/phones/add/${person.id}" class="add-link">➕ Добавить номер</a>
-            <br/><br/>
-            <a href="/persons/all" class="add-link">← Назад к контактам</a>
-        </div>
-    </body>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${phones}" var="phone" varStatus="status">
+                            <tr>
+                                <td>
+                                    ${phone.number}
+                                    <c:if test="${status.first}">
+                                        <span style="color: green;"> (Основной)</span>
+                                    </c:if>
+                                </td>
+                                <td>${phone.type != null ? phone.type : 'не указан'}?</td>
+                                <td>
+                                    <c:if test="${!status.first}">
+                                        <a href="/phones/delete/${phone.id}"
+                                           onclick="return confirm('Удалить номер ${phone.number}?')"
+                                           class="delete-btn">❌ Удалить</a>
+                                    </c:if>
+                                 </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:otherwise>
+        </c:choose>
+
+        <br/>
+        <a href="/phones/add/${person.id}" class="add-link">➕ Добавить номер</a>
+        <br/><br/>
+        <a href="/persons/all" class="add-link">← Назад к контактам</a>
+    </div>
+</body>
 </html>

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/persons")
+@RequestMapping("/phones")
 public class PhoneController {
 
     @Autowired
@@ -21,7 +21,7 @@ public class PhoneController {
     @Autowired
     private PhoneService phoneService;
 
-    @GetMapping("/phones/{personId}")
+    @GetMapping("/{personId}")
     public String showPhones(@PathVariable int personId, Model model) {
         Person person = personService.getById(personId);
         List<PhoneNumber> phones = phoneService.findByPersonId(personId);
@@ -30,28 +30,28 @@ public class PhoneController {
         return "phones";
     }
 
-    @GetMapping("/phones/add/{personId}")
+    @GetMapping("/add/{personId}")
     public String showAddPhoneForm(@PathVariable int personId, Model model) {
         model.addAttribute("personId", personId);
         model.addAttribute("phone", new PhoneNumber());
         return "phone";
     }
 
-    @PostMapping("/phones/save")
+    @PostMapping("/save")
     public String savePhone(@RequestParam int personId,
                             @RequestParam String number,
                             @RequestParam String type) {
         Person person = personService.getById(personId);
         PhoneNumber phone = new PhoneNumber(number, type, person);
         phoneService.save(phone);
-        return "redirect:/persons/phones/" + personId;
+        return "redirect:/phones/" + personId;
     }
 
-    @GetMapping("/phones/delete/{phoneId}")
+    @GetMapping("/delete/{phoneId}")
     public String deletePhone(@PathVariable int phoneId) {
         PhoneNumber phone = phoneService.findById(phoneId);
         int personId = phone.getPerson().getId();
         phoneService.deleteById(phoneId);
-        return "redirect:/persons/phones/" + personId;
+        return "redirect:/phones/" + personId;
     }
 }

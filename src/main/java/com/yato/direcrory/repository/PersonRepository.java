@@ -20,7 +20,6 @@ public class PersonRepository {
         return entityManager
                 .createQuery("FROM Person", Person.class)
                 .getResultList();
-
     }
 
     public void edit(Person person){
