@@ -37,13 +37,22 @@ public class PhoneController {
         return "phone";
     }
 
+    @GetMapping("/edit/{phoneId}")
+    public String showEditPhoneForm(@PathVariable int phoneId, Model model) {
+        PhoneNumber phone = phoneService.findById(phoneId);
+        model.addAttribute("phone", phone);
+        model.addAttribute("personId", phone.getPerson().getId());
+        return "phone";
+    }
+
     @PostMapping("/save")
-    public String savePhone(@RequestParam int personId,
-                            @RequestParam String number,
-                            @RequestParam String type) {
-        Person person = personService.getById(personId);
-        PhoneNumber phone = new PhoneNumber(number, type, person);
-        phoneService.save(phone);
+    public String savePhone(@ModelAttribute PhoneNumber phone,
+                            @RequestParam int personId) {
+        if (phone.getId() == null) {
+            Person person = personService.getById(personId);
+            phone.setPerson(person);
+        }
+        phoneService.saveOrUpdate(phone);
         return "redirect:/phones/" + personId;
     }
 

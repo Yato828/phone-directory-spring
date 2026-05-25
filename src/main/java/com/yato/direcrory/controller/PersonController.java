@@ -46,7 +46,7 @@ public class PersonController {
             phoneNumber.setNumber(phone);
             phoneNumber.setType("MAIN");
             phoneNumber.setPerson(person);
-            phoneService.save(phoneNumber);
+            phoneService.saveOrUpdate(phoneNumber);
         }
 
         return "redirect:/persons/all";

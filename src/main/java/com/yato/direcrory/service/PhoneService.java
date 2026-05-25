@@ -29,8 +29,8 @@ public class PhoneService {
     }
 
     @Transactional
-    public void save(PhoneNumber phoneNumber) {
-        phoneNumberRepository.save(phoneNumber);
+    public void saveOrUpdate(PhoneNumber phone) {
+        phoneNumberRepository.saveOrUpdate(phone);
     }
 
     @Transactional

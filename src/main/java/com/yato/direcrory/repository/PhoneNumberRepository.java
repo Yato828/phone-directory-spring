@@ -25,8 +25,12 @@ public class PhoneNumberRepository {
     }
 
     @Transactional
-    public void save(PhoneNumber phoneNumber) {
-        entityManager.persist(phoneNumber);
+    public void saveOrUpdate(PhoneNumber phoneNumber) {
+        if (phoneNumber.getId() == null) {
+            entityManager.persist(phoneNumber);
+        } else {
+            entityManager.merge(phoneNumber);
+        }
     }
 
     @Transactional
