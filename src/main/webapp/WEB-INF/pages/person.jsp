@@ -17,22 +17,23 @@
                     <h1>✏️ Редактирование контакта</h1>
                 </c:otherwise>
             </c:choose>
+
             <form action="/persons/save" method="post">
                 <c:if test="${not empty person.id}">
                     <input type="hidden" name="id" value="${person.id}">
                 </c:if>
 
-                <label>Имя:</label>
+                <label>Имя *:</label>
                 <input type="text" name="firstName" value="${person.firstName}" required>
 
-                <label>Фамилия:</label>
+                <label>Фамилия *:</label>
                 <input type="text" name="lastName" value="${person.lastName}" required>
 
                 <label>Отчество:</label>
                 <input type="text" name="middleName" value="${person.middleName}">
 
                 <c:if test="${empty person.id}">
-                    <label>Основной номер телефона: </label>
+                    <label>Основной номер телефона *:</label>
                     <input type="text" name="phone" required>
                 </c:if>
 
