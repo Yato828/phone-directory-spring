@@ -60,15 +60,9 @@ public class PersonController {
         return "redirect:/persons/all";
     }
     @GetMapping("/search")
-    public String searchByFirstName(@RequestParam(required = false) String firstName, Model model) {
-       if (firstName != null && !firstName.isEmpty()) {
-           List<Person> foundByName = personService.findByFirstName(firstName);
-           model.addAttribute("persons",foundByName );
-        } else {
-           List<Person> foundAll = personService.getAll();
-           model.addAttribute("persons", foundAll);
-       }
+    public String searchByName(@RequestParam(required = false) String firstName, Model model) {
+        List<Person> persons = personService.findByName(firstName);
+        model.addAttribute("persons", persons);
         return "persons";
     }
-
 }

@@ -48,11 +48,11 @@ public class PersonService {
     }
 
     @Transactional(readOnly = true)
-    public List<Person> findByFirstName(String firstName) {
-
-        return repository.findByFirstName(firstName);
+    public List<Person> findByName(String firstName) {
+        if (firstName != null && !firstName.isEmpty()) {
+            return repository.findByFirstName(firstName);
+        } else {
+            return repository.findAll();
+        }
     }
-
-
-
 }
