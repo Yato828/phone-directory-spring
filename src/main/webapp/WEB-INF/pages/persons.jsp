@@ -10,7 +10,17 @@
     <body>
         <div class="container">
             <h1>📞 Список контактов</h1>
-
+            <div class="search-container">
+                    <form action="/persons/search" method="get" class="search-form">
+                        <input type="text"
+                               name="query"
+                               class="search-input"
+                               placeholder="🔍 Поиск"
+                               value="${param.query}">
+                        <button type="submit" class="search-button">🔍 Найти</button>
+                        <a href="/persons/all" class="clear-button">✖️ Очистить</a>
+                    </form>
+                </div>
             <c:choose>
                 <c:when test="${empty persons}">
                     <div class="empty-message">

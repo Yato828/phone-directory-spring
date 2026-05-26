@@ -1,5 +1,6 @@
 package com.yato.direcrory.controller;
 
+import com.yato.direcrory.entity.NumberType;
 import com.yato.direcrory.entity.Person;
 import com.yato.direcrory.entity.PhoneNumber;
 import com.yato.direcrory.service.PersonService;
@@ -34,6 +35,7 @@ public class PhoneController {
     public String showAddPhoneForm(@PathVariable int personId, Model model) {
         model.addAttribute("personId", personId);
         model.addAttribute("phone", new PhoneNumber());
+        model.addAttribute("numberTypes", NumberType.values());
         return "phone";
     }
 
@@ -42,12 +44,15 @@ public class PhoneController {
         PhoneNumber phone = phoneService.findById(phoneId);
         model.addAttribute("phone", phone);
         model.addAttribute("personId", phone.getPerson().getId());
+        model.addAttribute("numberTypes", NumberType.values());
         return "phone";
     }
 
     @PostMapping("/save")
     public String savePhone(@ModelAttribute PhoneNumber phone,
-                            @RequestParam int personId) {
+                            @RequestParam int personId,
+                            @RequestParam NumberType numberType) {
+        phone.setNumberType(numberType);
         if (phone.getId() == null) {
             Person person = personService.getById(personId);
             phone.setPerson(person);

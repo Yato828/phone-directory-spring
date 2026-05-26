@@ -8,59 +8,59 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>📞 Телефоны: ${person.firstName} ${person.lastName}</h1>
+<div class="container">
+    <h1>📞 Телефоны: ${person.firstName} ${person.lastName}</h1>
 
-        <c:choose>
-            <c:when test="${empty phones}">
-                <p>❌ Нет добавленных телефонов</p>
-            </c:when>
-            <c:otherwise>
-                <table>
-                    <thead>
+    <c:choose>
+        <c:when test="${empty phones}">
+            <p>❌ Нет добавленных телефонов</p>
+        </c:when>
+        <c:otherwise>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Номер телефона</th>
+                        <th>Тип номера</th>
+                        <th>Описание</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${phones}" var="phone" varStatus="status">
                         <tr>
-                            <th>Номер телефона</th>
-                            <th>Тип номера</th>
-                            <th>Описание</th>
-                            <th>Действия</th>
+                            <td>
+                                ${phone.number}
+                                <c:if test="${status.first}">
+                                    <span style="color: green;"> (Основной)</span>
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${phone.numberType == 'MOBILE'}">📱 Мобильный</c:when>
+                                    <c:when test="${phone.numberType == 'HOME'}">🏠 Домашний</c:when>
+                                    <c:when test="${phone.numberType == 'WORK'}">💼 Рабочий</c:when>
+                                    <c:when test="${phone.numberType == 'FAX'}">📠 Факс</c:when>
+                                    <c:otherwise>${phone.numberType}</c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>${not empty phone.description ? phone.description : '-'}</td>
+                            <td>
+                                <a href="/phones/edit/${phone.id}" class="edit-btn">✏️ Редактировать</a>
+                                <a href="/phones/delete/${phone.id}"
+                                   onclick="return confirm('Удалить номер ${phone.number}?')"
+                                   class="delete-btn">❌ Удалить</a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${phones}" var="phone" varStatus="status">
-                            <tr>
-                                <td>
-                                    ${phone.number}
-                                    <c:if test="${status.first}">
-                                        <span style="color: green;"> (Основной)</span>
-                                    </c:if>
-                                </td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${phone.numberType == 'MOBILE'}">📱 Мобильный</c:when>
-                                        <c:when test="${phone.numberType == 'HOME'}">🏠 Домашний</c:when>
-                                        <c:when test="${phone.numberType == 'WORK'}">💼 Рабочий</c:when>
-                                        <c:when test="${phone.numberType == 'FAX'}">📠 Факс</c:when>
-                                        <c:otherwise>-</c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <td>${not empty phone.description ? phone.description : '-'}</td>
-                                <td>
-                                    <a href="/phones/edit/${phone.id}" class="edit-btn">✏️ Редактировать</a>
-                                    <a href="/phones/delete/${phone.id}"
-                                       onclick="return confirm('Удалить номер ${phone.number}?')"
-                                       class="delete-btn">❌ Удалить</a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </c:otherwise>
-        </c:choose>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </c:otherwise>
+    </c:choose>
 
-        <br/>
-        <a href="/phones/add/${person.id}" class="add-link">➕ Добавить номер</a>
-        <br/><br/>
-        <a href="/persons/all" class="add-link">← Назад к контактам</a>
-    </div>
+    <br/>
+    <a href="/phones/add/${person.id}" class="add-link">➕ Добавить номер</a>
+    <br/><br/>
+    <a href="/persons/all" class="add-link">← Назад к контактам</a>
+</div>
 </body>
 </html>

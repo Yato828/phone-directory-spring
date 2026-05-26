@@ -13,8 +13,9 @@ public class PhoneNumber {
     @Column(name = "number", nullable = false)
     private String number;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "number_type")
-    private String numberType;
+    private NumberType numberType;
 
     @Column(name = "description", length = 500)
     private String description;
@@ -23,18 +24,16 @@ public class PhoneNumber {
     @JoinColumn(name = "contact_id", nullable = false)
     private Person person;
 
-    // Конструкторы
     public PhoneNumber() {
     }
 
-    public PhoneNumber(String number, String numberType, String description, Person person) {
+    public PhoneNumber(String number, NumberType numberType, String description, Person person) {
         this.number = number;
         this.numberType = numberType;
         this.description = description;
         this.person = person;
     }
 
-    // Геттеры и сеттеры
     public Integer getId() {
         return id;
     }
@@ -51,11 +50,11 @@ public class PhoneNumber {
         this.number = number;
     }
 
-    public String getNumberType() {
+    public NumberType getNumberType() {
         return numberType;
     }
 
-    public void setNumberType(String numberType) {
+    public void setNumberType(NumberType numberType) {
         this.numberType = numberType;
     }
 
