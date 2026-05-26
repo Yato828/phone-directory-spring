@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/persons")
 public class PersonController {
@@ -56,6 +58,17 @@ public class PersonController {
         phoneService.deleteByPersonId(id);
         personService.delete(id);
         return "redirect:/persons/all";
+    }
+    @GetMapping("/search")
+    public String searchByFirstName(@RequestParam(required = false) String firstName, Model model) {
+       if (firstName != null && !firstName.isEmpty()) {
+           List<Person> foundByName = personService.findByFirstName(firstName);
+           model.addAttribute("persons",foundByName );
+        } else {
+           List<Person> foundAll = personService.getAll();
+           model.addAttribute("persons", foundAll);
+       }
+        return "persons";
     }
 
 }

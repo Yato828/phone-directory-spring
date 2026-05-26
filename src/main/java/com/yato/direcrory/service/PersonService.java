@@ -46,4 +46,13 @@ public class PersonService {
     public void delete(int id) {
         repository.delete(id);
     }
+
+    @Transactional(readOnly = true)
+    public List<Person> findByFirstName(String firstName) {
+
+        return repository.findByFirstName(firstName);
+    }
+
+
+
 }

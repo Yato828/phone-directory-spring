@@ -13,10 +13,10 @@
             <div class="search-container">
                     <form action="/persons/search" method="get" class="search-form">
                         <input type="text"
-                               name="query"
+                               name="firstName"
                                class="search-input"
                                placeholder="🔍 Поиск"
-                               value="${param.query}">
+                               value="${param.firstName}">
                         <button type="submit" class="search-button">🔍 Найти</button>
                         <a href="/persons/all" class="clear-button">✖️ Очистить</a>
                     </form>

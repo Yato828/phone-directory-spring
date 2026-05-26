@@ -3,7 +3,6 @@ package com.yato.direcrory.repository;
 import com.yato.direcrory.entity.Person;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -42,5 +41,10 @@ public class PersonRepository {
         Person person = entityManager.find(Person.class, id);
         if (person != null)
         entityManager.remove(person);
+    }
+
+    public List<Person> findByFirstName(String name) {
+        String sql = "SELECT * FROM contacts WHERE LOWER(first_name) LIKE LOWER(:searchName)";
+        return entityManager.createNativeQuery(sql, Person.class).setParameter("searchName", "%" + name + "%").getResultList();
     }
 }
