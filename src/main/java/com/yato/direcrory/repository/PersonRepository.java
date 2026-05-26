@@ -44,7 +44,10 @@ public class PersonRepository {
     }
 
     public List<Person> findByFirstName(String name) {
-        String sql = "SELECT * FROM contacts WHERE LOWER(first_name) LIKE LOWER(:searchName)";
+        String sql = "SELECT * FROM contacts " +
+        "WHERE LOWER(first_name) LIKE LOWER(:searchName) " +
+                "OR LOWER(last_name) LIKE LOWER(:searchName) " +
+                "OR LOWER(middle_name) LIKE LOWER(:searchName) ";
         return entityManager.createNativeQuery(sql, Person.class).setParameter("searchName", "%" + name + "%").getResultList();
     }
 }
