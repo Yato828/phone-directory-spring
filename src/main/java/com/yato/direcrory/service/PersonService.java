@@ -49,10 +49,16 @@ public class PersonService {
 
     @Transactional(readOnly = true)
     public List<Person> search(String query) {
+        List<Person> persons;
         if (query != null && !query.isEmpty()) {
-            return repository.search(query);
+            persons = repository.search(query);
         } else {
-            return repository.findAll();
+            persons = repository.findAll();
         }
+        for (Person person : persons) {
+            Hibernate.initialize(person.getPhoneNumbers());
+        }
+        return persons;
     }
 }
+

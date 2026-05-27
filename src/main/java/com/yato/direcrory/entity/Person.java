@@ -24,7 +24,7 @@ public class Person {
     @Column(name = "birth_date")
     private String birth;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PhoneNumber> phoneNumbers = new ArrayList<>();
 
     // Конструкторы
