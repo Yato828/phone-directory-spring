@@ -48,9 +48,9 @@ public class PersonService {
     }
 
     @Transactional(readOnly = true)
-    public List<Person> findByName(String firstName) {
-        if (firstName != null && !firstName.isEmpty()) {
-            return repository.findByFirstName(firstName);
+    public List<Person> search(String query) {
+        if (query != null && !query.isEmpty()) {
+            return repository.search(query);
         } else {
             return repository.findAll();
         }
