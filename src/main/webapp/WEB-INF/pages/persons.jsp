@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Телефонная книга - Все контакты</title>
@@ -56,7 +57,15 @@
                                             <c:otherwise>-</c:otherwise>
                                         </c:choose>
                                     </td>
-                                    <td>${not empty person.birth ? person.birth : '-'}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${not empty person.birth}">
+                                                <fmt:parseDate value="${person.birth}" pattern="yyyy-MM-dd" var="parsedDate" />
+                                                <fmt:formatDate value="${parsedDate}" pattern="dd.MM.yyyy" />
+                                            </c:when>
+                                            <c:otherwise>-</c:otherwise>
+                                        </c:choose>
+                                    </td>
                                     <td>
                                         <a href="/phones/${person.id}" class="edit-btn">📞 Телефоны</a>
                                     </td>

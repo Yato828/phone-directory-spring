@@ -46,19 +46,29 @@ public class PersonService {
     public void delete(int id) {
         repository.delete(id);
     }
+    private boolean isPhoneNumber(String text) {
+        String onlyDigits = text.replaceAll("[\\s\\-+()]", "");
+        return !onlyDigits.isEmpty() && onlyDigits.matches("^\\d+$");
+    }
+
 
     @Transactional(readOnly = true)
     public List<Person> search(String query) {
         List<Person> persons;
-        if (query != null && !query.isEmpty()) {
-            persons = repository.search(query);
-        } else {
+        if (query == null || query.isEmpty()) {
             persons = repository.findAll();
+        }
+        else if (isPhoneNumber(query)) {
+            persons = repository.searchByNumber(query);
+        }
+        else {
+            persons = repository.search(query);
         }
         for (Person person : persons) {
             Hibernate.initialize(person.getPhoneNumbers());
         }
         return persons;
     }
+
 }
 
