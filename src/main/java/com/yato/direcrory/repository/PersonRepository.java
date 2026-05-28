@@ -3,8 +3,10 @@ package com.yato.direcrory.repository;
 import com.yato.direcrory.entity.Person;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Date;
 import java.util.List;
 
 
@@ -15,13 +17,13 @@ public class PersonRepository {
     private EntityManager entityManager;
 
     @GetMapping
-    public List<Person> findAll(){
+    public List<Person> findAll() {
         return entityManager
                 .createQuery("FROM Person", Person.class)
                 .getResultList();
     }
 
-    public void edit(Person person){
+    public void edit(Person person) {
         entityManager.merge(person);
     }
 
@@ -49,12 +51,6 @@ public class PersonRepository {
                 "OR LOWER(last_name) LIKE LOWER(:query) " +
                 "OR LOWER(middle_name) LIKE LOWER(:query) ";
 
-        if (query != null && query.contains(".") && query.length() == 10) {
-            String[] parts = query.split("\\.");
-            String dateForSql = parts[2] + "-" + parts[1] + "-" + parts[0];
-            sql += "OR birth_date = '" + dateForSql + "' ";
-        }
-
         return entityManager.createNativeQuery(sql, Person.class)
                 .setParameter("query", "%" + query + "%")
                 .getResultList();
@@ -66,6 +62,17 @@ public class PersonRepository {
 
         return entityManager.createNativeQuery(sql, Person.class)
                 .setParameter("number", "%" + number + "%")
+                .getResultList();
+    }
+
+    public List<Person> searchByDate(Date date) {
+        if (date == null) {
+            return List.of();
+        }
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        String sql = "SELECT * FROM contacts WHERE birth_date = :date";
+        return entityManager.createNativeQuery(sql, Person.class)
+                .setParameter("date", sqlDate)
                 .getResultList();
     }
 }

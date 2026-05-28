@@ -1,6 +1,5 @@
 package com.yato.direcrory.service;
 
-import com.yato.direcrory.entity.Person;
 import com.yato.direcrory.entity.PhoneNumber;
 import com.yato.direcrory.repository.PhoneNumberRepository;
 import org.springframework.beans.factory.annotation.Autowired;

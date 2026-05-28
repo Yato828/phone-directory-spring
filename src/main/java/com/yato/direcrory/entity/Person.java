@@ -2,6 +2,7 @@ package com.yato.direcrory.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -22,7 +23,7 @@ public class Person {
     private String middleName;
 
     @Column(name = "birth_date")
-    private String birth;
+    private Date birth;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PhoneNumber> phoneNumbers = new ArrayList<>();
@@ -31,7 +32,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(String firstName, String lastName, String middleName, String birth) {
+    public Person(String firstName, String lastName, String middleName, Date birth) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
@@ -71,11 +72,11 @@ public class Person {
         this.middleName = middleName;
     }
 
-    public String getBirth() {
+    public Date getBirth() {
         return birth;
     }
 
-    public void setBirth(String birth) {
+    public void setBirth(Date birth) {
         this.birth = birth;
     }
 
@@ -86,10 +87,4 @@ public class Person {
     public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
-
-//    @Override
-//    public String toString() {
-//        return id + " | " + firstName + " " + middleName + " " + lastName +
-//                " | тел: " + getMainPhone() + " | дата: " + birth;
-//    }
 }

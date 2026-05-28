@@ -1,14 +1,18 @@
 package com.yato.direcrory.controller;
 
 import com.yato.direcrory.entity.Person;
-import com.yato.direcrory.entity.PhoneNumber;
 import com.yato.direcrory.service.PersonService;
 import com.yato.direcrory.service.PhoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -40,16 +44,27 @@ public class PersonController {
     }
 
     @PostMapping("/save")
-    public String savePerson(@ModelAttribute Person person,
-                             @RequestParam(required = false) String phone) {
-        personService.saveOrUpdate(person);
-        if (phone != null && !phone.isEmpty()) {
-            PhoneNumber phoneNumber = new PhoneNumber();
-            phoneNumber.setNumber(phone);
-//            phoneNumber.setType("MAIN");
-            phoneNumber.setPerson(person);
-            phoneService.saveOrUpdate(phoneNumber);
+    public String savePerson(@RequestParam String firstName,
+                             @RequestParam String lastName,
+                             @RequestParam String middleName,
+                             @RequestParam String birth,
+                             Model model) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        Date birthDate = null;
+        try {
+            if (birth != null && !birth.isEmpty()) {
+                birthDate = formatter.parse(birth);
+            }
+        } catch (Exception e) {
+            birthDate = null;
         }
+        Person person = new Person();
+        person.setFirstName(firstName);
+        person.setLastName(lastName);
+        person.setMiddleName(middleName);
+        person.setBirth(birthDate);
+        personService.saveOrUpdate(person);
+
         return "redirect:/persons/all";
     }
 
@@ -59,6 +74,7 @@ public class PersonController {
         personService.delete(id);
         return "redirect:/persons/all";
     }
+
     @GetMapping("/search")
     public String search(@RequestParam(required = false) String query, Model model) {
         List<Person> persons = personService.search(query);

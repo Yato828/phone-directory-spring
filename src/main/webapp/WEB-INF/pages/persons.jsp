@@ -60,8 +60,7 @@
                                     <td>
                                         <c:choose>
                                             <c:when test="${not empty person.birth}">
-                                                <fmt:parseDate value="${person.birth}" pattern="yyyy-MM-dd" var="parsedDate" />
-                                                <fmt:formatDate value="${parsedDate}" pattern="dd.MM.yyyy" />
+                                               <fmt:formatDate value="${person.birth}" pattern="dd.MM.yyyy" />
                                             </c:when>
                                             <c:otherwise>-</c:otherwise>
                                         </c:choose>
